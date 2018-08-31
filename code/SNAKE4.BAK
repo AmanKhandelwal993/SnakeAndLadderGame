@@ -1,0 +1,471 @@
+#include<conio.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<graphics.h>
+#include<iostream.h>
+#include<string.h>
+#include<dos.h>
+#define gotoxy(y,x) printf("\033[%d;%dH",(x),(y))
+static int x[5]={0,35,50,50,35};
+static int y[5]={0,385,385,370,370};
+static int c[5]={0,0,0,0,0};
+void show();
+void player(int);
+void button(int);
+void showplayer();
+void clearplayer();
+void showsnake();
+void check_snake(int);
+void check_ladder(int);
+void show()
+{
+   /* request auto detection */
+//   int gdriver = DETECT, gmode, errorcode;
+   int x, y;
+//   int radius = 100;
+
+   /* initialize graphics and local variables */
+//   initgraph(&gdriver, &gmode, "C:\\TC\\bgi");
+
+   /* read result of initialization */
+//   errorcode = graphresult();
+//   if (errorcode != grOk)  /* an error occurred */
+//   {
+//      printf("Graphics error: %s\n", grapherrormsg(errorcode));
+ //     printf("Press any key to halt:");
+//      getch();
+ //     exit(1); /* terminate with an error code */
+//   }
+
+   x = getmaxx() ;
+   y = getmaxy() ;
+   setcolor(8);
+   cout<<x<<"=="<<y;
+	int i=1,j,ch,c=1,a=0;
+	int x1=10,y1=380;
+	char msg[50];
+	for(i=0;i<660;i=i+60)
+	{
+		line(i,0,i,400);
+
+	}
+
+	for(i=0;i<440;i=i+40)
+	{
+		line(0,i,600,i);
+
+	}
+   setcolor(WHITE);
+       //outtextxy(10,400,msg);
+       for(j=1;j<11;j++)
+       {
+	ch=j%2;
+	if(ch==1)
+	{
+		for(i=0;i<10;i++)
+		{
+			sprintf(msg,"%d",c);
+			outtextxy(x1,y1,msg);
+			x1=x1+60;
+			c=c++;
+		}
+		y1=y1-40;
+		x1=x1-60;
+
+	}
+	if(ch==0)
+	{
+		for(i=0;i<10;i++)
+		{
+			sprintf(msg,"%d",c);
+			outtextxy(x1,y1,msg);
+			x1=x1-60;
+			c=c++;
+		}
+		y1=y1-40;
+		x1=x1+60;
+       }
+       }
+      showsnake();
+      // circle(35,385,5);
+   /* clean up */
+  // getch();
+  // closegraph();
+}
+void showsnake()
+{
+	FILE *fp;
+	int initx,inity,endx,endy;
+	setcolor(BROWN)	;
+	//sanke1
+	fp=fopen("sanke1.DAT","r");
+	if(fp==NULL)
+	{
+		puts("cannot open the file !!!");
+	}
+	while(fscanf(fp,"%d%d%d%d",&initx,&inity,&endx,&endy)!=EOF)
+	{
+
+		     line(initx,inity,endx,endy);
+	}
+	fclose(fp);
+	//snake2
+	fp=fopen("sanke2.DAT","r");
+	if(fp==NULL)
+	{
+		puts("cannot open the file !!!");
+	}
+	while(fscanf(fp,"%d%d%d%d",&initx,&inity,&endx,&endy)!=EOF)
+	{
+
+		     line(initx,inity,endx,endy);
+	}
+	fclose(fp);
+	//snake3
+	fp=fopen("sanke3.DAT","r");
+	if(fp==NULL)
+	{
+		puts("cannot open the file !!!");
+	}
+	while(fscanf(fp,"%d%d%d%d",&initx,&inity,&endx,&endy)!=EOF)
+	{
+
+		     line(initx,inity,endx,endy);
+	}
+	fclose(fp);
+	//snake4
+	fp=fopen("sanke4.DAT","r");
+	if(fp==NULL)
+	{
+		puts("cannot open the file !!!");
+	}
+	while(fscanf(fp,"%d%d%d%d",&initx,&inity,&endx,&endy)!=EOF)
+	{
+
+		     line(initx,inity,endx,endy);
+	}
+	fclose(fp);
+	setcolor(WHITE);
+}
+/*void show()
+{
+	int x,y;
+	x = getmaxx() ;
+	y = getmaxy() ;
+	cout<<x<<"=="<<y;
+	int i=1,j,ch,c=1;
+	int a1=10,b1=380;
+	char msg[50];
+	for(i=0;i<660;i=i+60)
+	{
+		line(i,0,i,400);
+
+	}
+
+	for(i=0;i<440;i=i+40)
+	{
+		line(0,i,600,i);
+
+	}
+
+       //outtextxy(10,400,msg);
+       for(j=1;j<11;j++)
+       {
+	ch=j%2;
+	if(ch==1)
+	{
+		for(i=0;i<10;i++)
+		{
+			sprintf(msg,"%d",c);
+			outtextxy(a1,b1,msg);
+			a1=b1+60;
+			c=c++;
+		}
+		b1=b1-40;
+		a1=a1-60;
+
+	}
+	if(ch==0)
+	{
+		for(i=0;i<10;i++)
+		{
+			sprintf(msg,"%d",c);
+			outtextxy(a1,b1,msg);
+			a1=a1-60;
+			c=c++;
+		}
+		b1=b1-40;
+		a1=a1+60;
+       }
+       }
+
+       circle(35,385,5);
+   /* clean up
+   getch();
+  // closegraph();
+} */
+void show1()
+{
+	int i=0;
+	for(i=0;i<20;i++)
+	{
+		gotoxy(0,i);
+		printf("_");
+	}
+	for(i=0;i<70;i=i+7)
+	{
+		gotoxy(i,0);
+		printf("_");
+	}
+}
+void turn()
+{
+	int p;
+	re:
+	for(p=1;p<5;p++)
+	{
+		button(p);
+		player(p);
+	}
+	goto re;
+}
+void button(int p)
+{
+	char f;
+	gotoxy(0,32);
+	printf("\n\n\t\t\tplayer %d turn",p);
+	printf("\n\t\t\tpress any key to throw dice& e to exit");
+	printf("\n\n\t\t                         ");
+	fflush(stdin);
+	f=getch();
+	if(f=='e')
+	{
+		exit(1);
+	}
+}
+void dice(int r)
+{
+	gotoxy(0,32);
+	delay(500);
+	printf("\n\n\n\n\n\t\tdice value =%d",r);
+	delay(500);
+
+}
+void player(int p)
+{
+	int q,r,t;
+	int max=5;
+
+	static int div[5]={0,0,0,0,0};
+	static int k[5]={0,0,0,0,0};
+	me:
+	randomize();
+	r=rand()%6+1;
+	dice(r);
+	t=rand()%8+1;
+	if(c[p]+r>100)
+	{	goto fe;
+	}
+	if(c[p]==0&&k[p]<t&&r!=6)
+	{
+		k[p]++;
+		goto fe;
+	}
+	if(c[p]==0&&k[p]>=t&&r!=6)
+	{
+		r=6;
+	}
+	if(c[p]==0&&r==6)
+	{
+		showplayer();
+		c[p]++;
+		goto fe;
+	}
+	for(q=1;q<=r;q++)
+	{
+		clearplayer();
+		//if(c[p]%10==0)
+		div[p]=c[p]/10;
+		if(x[p]<540&&div[p]%2==0)
+		{
+			if(c[p]%10==0)
+			{
+			y[p]=y[p]-40;
+			c[p]++;
+			}
+			else
+			{
+			x[p]=x[p]+60;
+			c[p]++;
+			}
+		}
+		else if(x[p]>0&&div[p]%2==1)
+		{
+			if(c[p]%10==0)
+			{
+			y[p]=y[p]-40;
+			c[p]++;
+			}
+			else
+			{
+			x[p]=x[p]-60;
+			c[p]++;
+			}
+		}
+
+		showplayer();
+	}
+       //	showplayer();
+	fe:
+	check_snake(p);
+	check_ladder(p);
+	if(r==6)
+	{
+	button(p);
+	goto me;
+	}
+}
+void check_snake(int p)
+{
+	if(((x[p]==95)||(x[p]==110))&&((y[p]==25)||(y[p]==10)))
+	{
+		clearplayer();
+		x[p]=x[p]+4*60;
+		y[p]=y[p]+9*40;
+		showplayer();
+		c[p]=6;
+	}
+	if(((x[p]==455)||(x[p]==470))&&((y[p]==65)||(y[p]==50)))
+	{
+		clearplayer();
+		x[p]=x[p]-1*60;
+		y[p]=y[p]+3*40;
+		showplayer();
+		c[p]=54;
+	}
+	if(((x[p]==575)||(x[p]==590))&&((y[p]==105)||(y[p]==90)))
+	{
+		clearplayer();
+		x[p]=x[p]-1*60;
+		y[p]=y[p]+5*40;
+		showplayer();
+		c[p]=29;
+	}
+	if(((x[p]==335)||(x[p]==350))&&((y[p]==185)||(y[p]==170)))
+	{
+		clearplayer();
+		x[p]=x[p]+2*60;
+		y[p]=y[p]+4*40;
+		showplayer();
+		c[p]=13;
+	}
+}
+void check_ladder(int p)
+{
+	if(((x[p]==335)||(x[p]==350))&&((y[p]==345)||(y[p]==330)))
+	{
+		clearplayer();
+		x[p]=x[p]-2*60;
+		y[p]=y[p]-8*40;
+		showplayer();
+		c[p]=97;
+	}
+	if(((x[p]==335)||(x[p]==350))&&((y[p]==145)||(y[p]==130)))
+	{
+		clearplayer();
+		x[p]=x[p]+1*60;
+		y[p]=y[p]-2*40;
+		showplayer();
+		c[p]=87;
+	}
+	if(((x[p]==95)||(x[p]==110))&&((y[p]==225)||(y[p]==210)))
+	{
+		clearplayer();
+		x[p]=x[p]-1*60;
+		y[p]=y[p]-4*40;
+		showplayer();
+		c[p]=81;
+	}
+	if(((x[p]==455)||(x[p]==470))&&((y[p]==385)||(y[p]==370)))
+	{
+		clearplayer();
+		x[p]=x[p]+2*60;
+		y[p]=y[p]-3*40;
+		showplayer();
+		c[p]=31;
+	}
+}
+void clearplayer()
+{
+	setcolor(BLACK);
+	circle(x[1],y[1],5);
+	circle(x[2],y[2],5);
+	circle(x[3],y[3],5);
+	circle(x[4],y[4],5);
+	setcolor(WHITE);
+}
+void showplayer()
+{
+       //	cleardevice();
+       //	show();
+	setcolor(RED);
+	circle(x[1],y[1],5);
+	setcolor(YELLOW);
+	circle(x[2],y[2],5);
+	setcolor(BLUE);
+	circle(x[3],y[3],5);
+	setcolor(GREEN);
+	circle(x[4],y[4],5);
+	setcolor(WHITE);
+	delay(200);
+}
+void player1()
+{
+	circle(95,25,5);
+}
+void player2()
+{
+	circle(95,10,5);
+}
+void player3()
+{
+	circle(110,25,5);
+}
+void player4()
+{
+	circle(110,10,5);
+}
+
+void main()
+{
+	clrscr();
+	int gdriver = DETECT, gmode, errorcode;
+   int x, y;
+   int radius = 100;
+
+   /* initialize graphics and local variables */
+   initgraph(&gdriver, &gmode, "C:\\TC\\bgi");
+
+   /* read result of initialization */
+   errorcode = graphresult();
+   if (errorcode != grOk)  /* an error occurred */
+   {
+      printf("Graphics error: %s\n", grapherrormsg(errorcode));
+      printf("Press any key to halt:");
+      getch();
+      exit(1); /* terminate with an error code */
+   }
+
+	show();
+	getch();
+       //	showplayer();
+      // player1();
+      // player2();
+      // player3();
+      // player4();
+	turn();
+	//player1();
+       //	player2();
+	getch();
+	closegraph();
+}
